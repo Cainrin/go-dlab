@@ -3,6 +3,7 @@ package response
 import (
 	"encoding/xml"
 	le "github.com/Cainrin/go-dlab/errors"
+	"github.com/gogf/gf/errors/gerror"
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gvalid"
@@ -60,6 +61,8 @@ func FailedJsonExit(r *ghttp.Request, err error) {
 			g.Log().Errorf("code: %s, err: %+v", se.Code, se.Error())
 			JsonExit(r, se.Code, se.Error(), nil)
 		}
+	} else if ge, ok := err.(*gerror.Error); ok {
+		JsonExit(r, 1024, ge.Error(), nil)
 	} else {
 		g.Log().Errorf("未知错误:" + err.Error())
 		JsonExit(r, le.CUnknownError, "未知错误："+err.Error(), nil)
