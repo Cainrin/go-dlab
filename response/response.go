@@ -30,7 +30,7 @@ func Json(r *ghttp.Request, code int, message string, data interface{}) {
 
 // JsonExit 返回JSON数据并退出当前HTTP执行函数。
 func JsonExit(r *ghttp.Request, err int, msg string, data ...interface{}) {
-	if data != nil {
+	if data != nil && len(data) > 0 {
 		Json(r, err, msg, data[0])
 	} else {
 		Json(r, err, msg, nil)
